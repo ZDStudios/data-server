@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Save Data Locally</title>
+</head>
+<body>
+  <h1>Enter Data and Save Locally</h1>
+  <textarea id="dataInput" rows="10" cols="50" placeholder="Enter your data here..."></textarea><br />
+  <button id="saveBtn">Save Data to File</button>
+
+  <script>
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      const data = document.getElementById('dataInput').value;
+      if (!data) {
+        alert('Please enter some data first.');
+        return;
+      }
+
+      const blob = new Blob([data], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.txt';
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 0);
+    });
+  </script>
+</body>
+</html>
